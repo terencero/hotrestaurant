@@ -29,10 +29,12 @@ app.get("/", function(req, res) {
 });
 
 app.get("/reserve", function(req, res) {
+    console.log('sending reservations file');
     res.sendFile(path.join(__dirname, "make.html"));
 });
 
 app.get("/tables", function(req, res) {
+      console.log('sending tables file');
     res.sendFile(path.join(__dirname, "view.html"));
 });
 
@@ -43,8 +45,12 @@ app.get("/api/:action?", function(req, res) {
 
     //if the action is reservations, send the reservation list
     if (action === 'reservations') {
+      console.log('Sending reservations: ');
+      console.log(reservations);
       res.json(reservations);
     } else if (action === 'waitlist') {
+      console.log('Sending waitlist: ');
+      console.log(waitlist);
       res.json(waitlist);
 
     } else {
@@ -59,7 +65,7 @@ app.post("/api/new", function(req, res) {
 
     //capture data from message and create a res object
     var newReservation = req.body;
-
+    
     var resObject = {
 
         name: newReservation.reserve_name,
@@ -68,6 +74,7 @@ app.post("/api/new", function(req, res) {
         id: newReservation.reserve_uniqueID,
     };
 
+    console.log('Received new reservation request:');
     console.log(resObject);
 
     //if there are more than 3 reservations, add to wailist
