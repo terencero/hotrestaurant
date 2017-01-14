@@ -67,11 +67,7 @@ function runTableQuery() {
     var currentURL = window.location.origin;
 
     // The AJAX function uses the URL of our API to GET the data associated with it (initially set to localhost)
-    $.ajax({
-            url: currentURL + "/api/tables",
-            method: "GET"
-        })
-        .done(function(tableData) {
+    $.get("/api/tables",function(tableData) {
 
             // Here we are logging the URL so we have access to it for troubleshooting
             console.log("------------------------------------");
@@ -95,7 +91,7 @@ function runTableQuery() {
 
 
                 // Then display the remaining fields in the HTML (Section Name, Date, URL)
-                $("#tableWell-" + i + 1).append('<h2><span class="label label-primary">' + tableNumber + "</span> | " + tableData[i].customerID + "</h2>");
+                $("#tableWell-" + i + 1).append('<h2><span class="label label-primary">' + tableNumber + "</span> | " + tableData[i].name + "</h2>");
             }
         });
 }

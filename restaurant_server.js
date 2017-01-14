@@ -68,10 +68,10 @@ app.post("/api/new", function(req, res) {
 
     var resObject = {
 
-        name: newReservation.customerName,
-        phone: newReservation.phoneNumber,
-        email: newReservation.customerEmail,
-        id: newReservation.customerID,
+        'name': newReservation.customerName,
+        'phone': newReservation.phoneNumber,
+        'email': newReservation.customerEmail,
+        'id': newReservation.customerID,
     };
 
     console.log('Received new reservation request:');
@@ -83,11 +83,13 @@ app.post("/api/new", function(req, res) {
     if (numCustomers < waitListCutoff) {
 
         reservations.push(resObject);
+        console.log(reservations);
         res.sendStatus(200);
 
     } else {
 
         waitlist.push(resObject);
+        console.log(waitlist);
         res.sendStatus(200);
 
     }
