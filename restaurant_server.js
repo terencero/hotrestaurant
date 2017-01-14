@@ -3,6 +3,10 @@
 var express = require("express");
 var bodyParser = require("body-parser");
 var path = require("path");
+var sql = require("mysql");
+var waitListCutoff = 3;
+var reservations = [];
+var waitlist = [];
 
 // Sets up the Express App
 // =============================================================
@@ -20,52 +24,65 @@ app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 
 // Basic route that sends the user first to the AJAX Page
 app.get("/", function(req, res) {
-    res.sendFile(path.join(__dirname, "tables.html"));
+    res.sendFile(path.join(__dirname, "home.html"));
 });
 
-app.get("/make/:stuff?", function(req, res) {
-    res.send('hello ' + req.params.stuff.toUpperCase())
-        //res.sendFile(path.join(__dirname, "make.html"));
+app.get("/reserve", function(req, res) {
+    res.sendFile(path.join(__dirname, "make.html"));
 });
 
-app.get("/view", function(req, res) {
+app.get("/table", function(req, res) {
     res.sendFile(path.join(__dirname, "view.html"));
 });
 
-app.get("/getsandwich", function(req, res) {
-    res.sendFile(path.join(__dirname, "tables.html"));
-});
-
 // Search for Specific Character (or all characters) - provides JSON
-app.get("/api/:characters?", function(req, res) {
-    var chosen = req.params.characters;
+app.get("/api/:action?", function(req, res) {
 
-    if (chosen) {
-        console.log(chosen);
+    var action = req.params.action;
 
-        for (var i = 0; i < characters.length; i++) {
-            if (chosen === characters[i].routeName) {
-                res.json(characters[i]);
-                return;
-            }
-        }
-
-        res.json(false);
+    //if the action is reservations, send the reservation list
+    if (action === 'reservations') {
+        res.json(reservations);
+    } else if (action === 'waitlist') {
+        res.json(waitlist);
     } else {
-        res.json(characters);
+        //let the client know that it was a bad request
+        res.sendStatus(404);
     }
+
 });
 
 // Create New Characters - takes in JSON input
 app.post("/api/new", function(req, res) {
+
+    //capture data from message and create a res object
     var newReservation = req.body;
-    newReservation.routeName = newReservation.name.replace(/\s+/g, "").toLowerCase();
 
-    console.log(newReservation);
+    var resObject = {
 
-    characters.push(newReservation);
+        name: newReservation.reserve_name,
+        phone: newReservation.reserve_phone,
+        email: newReservation.reserve_email,
+        id: newReservation.reserve_uniqueID,
+    };
 
-    res.json(newReservation);
+    console.log(resObject);
+
+    //if there are more than 3 reservations, add to wailist
+    var numCustomers = reservations.length;
+
+    if (numCustomers < waitListCutoff) {
+
+        reservations.push(resObject);
+        res.sendStatus(200);
+
+    } else {
+
+        waitlist.push(resObject);
+        res.sendStatus(200);
+
+    }
+
 });
 
 // Starts the server to begin listening
