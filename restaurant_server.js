@@ -3,6 +3,7 @@
 var express = require("express");
 var bodyParser = require("body-parser");
 var path = require("path");
+var sql = require("mysql");
 
 // Sets up the Express App
 // =============================================================
@@ -32,10 +33,19 @@ app.get("/view", function(req, res) {
 });
 
 // Search for Specific Character (or all characters) - provides JSON
-app.get("/api/:characters?", function(req, res) {
-  var chosen = req.params.characters;
+app.get("/api/:availability?", function(req, res) {
 
-  if (chosen) {
+  var avail = req.params.availability;
+
+  if (avail) {
+    console.log(avail);
+  } else {
+    //something
+  }
+
+/* 
+
+ if (chosen) {
     console.log(chosen);
 
     for (var i = 0; i < characters.length; i++) {
@@ -50,18 +60,26 @@ app.get("/api/:characters?", function(req, res) {
   else {
     res.json(characters);
   }
+
+*/
 });
 
 // Create New Characters - takes in JSON input
 app.post("/api/new", function(req, res) {
+
   var newReservation = req.body;
-  newReservation.routeName = newReservation.name.replace(/\s+/g, "").toLowerCase();
+
+
+  var name = newReservation.reserve_name;
+  var phone = newReservation.reserve_phone;
+  var email = newReservation.reserve_email;
+  var id = newReservation.reserve_uniqueID;
 
   console.log(newReservation);
 
-  characters.push(newReservation);
+  //update the DB
 
-  res.json(newReservation);
+  //res.json(newReservation);
 });
 
 // Starts the server to begin listening
