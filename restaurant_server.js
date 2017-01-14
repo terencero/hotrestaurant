@@ -44,7 +44,7 @@ app.get("/api/:action?", function(req, res) {
     var action = req.params.action;
 
     //if the action is reservations, send the reservation list
-    if (action === 'reservations') {
+    if (action === 'tables') {
       console.log('Sending reservations: ');
       console.log(reservations);
       res.json(reservations);
@@ -65,13 +65,13 @@ app.post("/api/new", function(req, res) {
 
     //capture data from message and create a res object
     var newReservation = req.body;
-    
+
     var resObject = {
 
-        name: newReservation.reserve_name,
-        phone: newReservation.reserve_phone,
-        email: newReservation.reserve_email,
-        id: newReservation.reserve_uniqueID,
+        name: newReservation.customerName,
+        phone: newReservation.phoneNumber,
+        email: newReservation.customerEmail,
+        id: newReservation.customerID,
     };
 
     console.log('Received new reservation request:');
