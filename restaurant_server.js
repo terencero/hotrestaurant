@@ -86,6 +86,13 @@ app.get("/api/:action?", function(req, res) {
 
 });
 
+app.post("/api/clear", function(req, res){
+  console.log('Clearing the tables...');
+  reservations = [];
+  waitlist = [];
+  res.sendStatus(200);
+})
+
 // Create New Characters - takes in JSON input
 app.post("/api/new", function(req, res) {
 
