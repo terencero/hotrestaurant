@@ -5,8 +5,34 @@ var bodyParser = require("body-parser");
 var path = require("path");
 var sql = require("mysql");
 var waitListCutoff = 3;
-var reservations = [];
-var waitlist = [];
+var reservations = [{
+
+    'name': 'brandon',
+    'phone': '123-345-567',
+    'email': 'branvh@gmail.com',
+    'id': 'b123',
+},
+{
+
+  'name': 'dan',
+  'phone': '123-345-567',
+  'email': 'branvh@gmail.com',
+  'id': 'ddog',
+},
+{
+
+  'name': 'mike',
+  'phone': '123-345-567',
+  'email': 'branvh@gmail.com',
+  'id': 'mmmM',
+}];
+var waitlist = [{
+
+  'name': 'joe',
+  'phone': '123-345-567',
+  'email': 'branvh@gmail.com',
+  'id': 'jman',
+}];
 
 // Sets up the Express App
 // =============================================================
