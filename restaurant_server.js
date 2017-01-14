@@ -24,15 +24,16 @@ app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 
 // Basic route that sends the user first to the AJAX Page
 app.get("/", function(req, res) {
-    res.sendFile(path.join(__dirname, "index.html"));
+
+    res.sendFile(path.join(__dirname, "home.html"));
 });
 
 app.get("/reserve", function(req, res) {
-    res.sendFile(path.join(__dirname, "reserve.html"));
+    res.sendFile(path.join(__dirname, "make.html"));
 });
 
-app.get("/table", function(req, res) {
-    res.sendFile(path.join(__dirname, "table.html"));
+app.get("/tables", function(req, res) {
+    res.sendFile(path.join(__dirname, "view.html"));
 });
 
 // Search for Specific Character (or all characters) - provides JSON
@@ -45,6 +46,7 @@ app.get("/api/:action?", function(req, res) {
       res.json(reservations);
     } else if (action === 'waitlist') {
       res.json(waitlist);
+
     } else {
         //let the client know that it was a bad request
         res.sendStatus(404);
