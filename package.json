@@ -1,7 +1,9 @@
 {
+
   "name": "hot_restaurant",
   "version": "1.0.0",
   "description": "reserve your table",
+
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,6 +12,7 @@
     "type": "git",
     "url": "git+https://github.com/terencero/hotrestaurant.git"
   },
+
   "author": "group",
   "license": "MIT",
   "bugs": {
@@ -21,4 +24,3 @@
     "mysql": "^2.12.0",
     "path": "^0.12.7"
   }
-}
